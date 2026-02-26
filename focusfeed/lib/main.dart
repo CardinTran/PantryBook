@@ -45,7 +45,7 @@ class WelcomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
+                color: Color.fromRGBO(133, 90, 251, 1),
               ),
             ),
             const SizedBox(height: 10),
@@ -68,7 +68,7 @@ class WelcomePage extends StatelessWidget {
                   icon: Icons.credit_card,
                   label: "Flash",
                   color: const Color(0xFF2D2060),
-                  iconColor: Colors.purpleAccent,
+                  iconColor: const Color.fromRGBO(133, 90, 251, 1),
                 ),
                 const SizedBox(width: 10),
                 _FeatureCard(
@@ -97,17 +97,21 @@ class WelcomePage extends StatelessWidget {
 
             // Get Started Button
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purpleAccent,
+              style: ElevatedButton.styleFrom(                
+                backgroundColor: Color.fromRGBO(133, 90, 251, 1),
                 minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: () {},
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Get Started"),
+                  Text("Get Started",
+                  style: TextStyle(
+                    color:Colors.white,
+                   ),
+                  ),
                   SizedBox(width: 8),
-                  Icon(Icons.arrow_forward, size: 18),
+                  Icon(Icons.arrow_forward, size: 18, color: Colors.white),                  
                 ],
               ),
             ),
@@ -116,13 +120,13 @@ class WelcomePage extends StatelessWidget {
             // Already Have Account Button
             OutlinedButton(
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.purpleAccent),
+                side: const BorderSide(color: Color.fromRGBO(133, 90, 251, 1)),
                 minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: () {},
               child: const Text(
                 "I Already Have an Account",
-                style: TextStyle(color: Colors.purpleAccent),
+                style: TextStyle(color: Color.fromRGBO(133, 90, 251, 1)),
               ),
             ),
           ],

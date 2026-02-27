@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import  'CreateAccountPage.dart';
+import 'create_account_page.dart';
+import 'login_page.dart';
 
 void main() {
   runApp(const FocusFeed());
@@ -129,7 +130,12 @@ class WelcomePage extends StatelessWidget {
                 side: const BorderSide(color: Color.fromRGBO(133, 90, 251, 1)),
                 minimumSize: const Size(double.infinity, 50),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
               child: const Text(
                 "I Already Have an Account",
                 style: TextStyle(color: Color.fromRGBO(133, 90, 251, 1)),

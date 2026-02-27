@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/WelcomePage.dart'; // add this
+import 'pages/welcome_page.dart'; // add this
 
 void main() {
   runApp(const FocusFeed());

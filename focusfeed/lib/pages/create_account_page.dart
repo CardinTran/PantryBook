@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focusfeed/auth_services.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -10,6 +11,20 @@ class CreateAccountPage extends StatefulWidget {
 class _CreateAccountPageState extends State<CreateAccountPage> {
   bool _showPassword = false;
   bool _showConfirmPassword = false;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final auth = AuthServices();
+
+  @override
+  void dispose(){
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +84,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 _InputField(
                   hint: "Full Name",
                   icon: Icons.person_outline,
+                  controller: nameController,
                 ),
 
                 const SizedBox(height: 14),
@@ -78,6 +94,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   hint: "Email",
                   icon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
+                  controller: emailController,
                 ),
 
                 const SizedBox(height: 14),
@@ -87,6 +104,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   hint: "Password",
                   icon: Icons.lock_outline,
                   obscure: !_showPassword,
+                  controller: passwordController,
                   suffixIcon: IconButton(
                     icon: Icon(
                       _showPassword ? Icons.visibility_off_outlined : Icons.remove_red_eye_outlined,
@@ -104,6 +122,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   hint: "Confirm Password",
                   icon: Icons.lock_outline,
                   obscure: !_showConfirmPassword,
+                  controller: confirmPasswordController,
                   suffixIcon: IconButton(
                     icon: Icon(
                       _showConfirmPassword ? Icons.visibility_off_outlined : Icons.remove_red_eye_outlined,
@@ -123,7 +142,19 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     minimumSize: const Size(double.infinity, 52),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  onPressed: () {},
+                  onPressed: () async{
+                    if(passwordController.text != confirmPasswordController.text){
+                      print("Password don't match");
+                      return;
+                    }
+                    final result = await auth.signUpWithEmail(
+                      emailController.text.trim(), 
+                      passwordController.text,
+                      );
+                      if (result != null && mounted){
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
+                  },
                   child: const Text(
                     "Create Account",
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
@@ -146,7 +177,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
                 const SizedBox(height: 16),
 
-                // Google + Apple buttons
+                // Google Button
                 Row(
                   children: [
                     Expanded(
@@ -156,7 +187,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        onPressed: () {},
+                        onPressed: () async{
+                          final result = await auth.signInWithGoogle();
+                          if (result != null && mounted){
+                            Navigator.pushReplacementNamed(context, '/home');
+                          }
+                        },  
                         icon: const Text("G", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                         label: const Text("Google", style: TextStyle(color: Colors.white)),
                       ),
@@ -167,17 +203,20 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 const SizedBox(height: 20),
 
                 // Already have an account
-                Center(
-                  child: RichText(
-                    text: const TextSpan(
-                      text: "Already have an account? ",
-                      style: TextStyle(color: Colors.white54, fontSize: 13),
-                      children: [
-                        TextSpan(
-                          text: "Login",
-                          style: TextStyle(color: Color.fromRGBO(133, 90, 251, 1), fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Center(
+                    child: RichText(
+                      text: const TextSpan(
+                        text: "Already have an account? ",
+                        style: TextStyle(color: Colors.white54, fontSize: 13),
+                        children: [
+                          TextSpan(
+                            text: "Login",
+                            style: TextStyle(color: Color.fromRGBO(133, 90, 251, 1), fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -191,6 +230,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 }
 
 class _InputField extends StatelessWidget {
+  final TextEditingController? controller;
   final String hint;
   final IconData icon;
   final bool obscure;
@@ -200,6 +240,7 @@ class _InputField extends StatelessWidget {
   const _InputField({
     required this.hint,
     required this.icon,
+    this.controller,
     this.obscure = false,
     this.keyboardType,
     this.suffixIcon,
@@ -208,6 +249,7 @@ class _InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       obscureText: obscure,
       keyboardType: keyboardType,
       style: const TextStyle(color: Colors.white),

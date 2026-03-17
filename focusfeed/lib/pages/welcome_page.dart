@@ -2,22 +2,6 @@ import 'package:flutter/material.dart';
 import 'create_account_page.dart';
 import 'login_page.dart';
 
-void main() {
-  runApp(const FocusFeed());
-}
-
-class FocusFeed extends StatelessWidget {
-  const FocusFeed({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
-    );
-  }
-}
-
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 

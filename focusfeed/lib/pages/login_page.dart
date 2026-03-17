@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focusfeed/auth_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,6 +10,16 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final auth = AuthServices();
+
+  @override
+  void dispose(){
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Email
                 TextField(
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -89,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Password
                 TextField(
+                  controller: passwordController,
                   obscureText: !_showPassword,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -123,7 +136,15 @@ class _LoginPageState extends State<LoginPage> {
                     minimumSize: const Size(double.infinity, 52),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  onPressed: () {},
+                  onPressed: () async{
+                    final result = await auth.signInWithEmail(
+                      emailController.text.trim(),
+                      passwordController.text,
+                      );
+                      if(result != null && mounted){
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
+                  },
                   child: const Text(
                     "Login",
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
@@ -154,7 +175,12 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  onPressed: () {},
+                  onPressed: () async{
+                    final result = await auth.signInWithGoogle();
+                    if (result != null && mounted){
+                      Navigator.pushReplacementNamed(context, '/home');
+                    }
+                  },
                   icon: const Text("G", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
                   label: const Text("Google", style: TextStyle(color: Colors.white)),
                 ),
@@ -162,17 +188,20 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
 
                 // Don't have an account
-                Center(
-                  child: RichText(
-                    text: const TextSpan(
-                      text: "Don't have an account? ",
-                      style: TextStyle(color: Colors.white54, fontSize: 13),
-                      children: [
-                        TextSpan(
-                          text: "Sign Up",
-                          style: TextStyle(color: Color.fromRGBO(133, 90, 251, 1), fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/signup'),
+                  child: Center(
+                    child: RichText(
+                      text: const TextSpan(
+                        text: "Don't have an account? ",
+                        style: TextStyle(color: Colors.white54, fontSize: 13),
+                        children: [
+                          TextSpan(
+                            text: "Sign Up",
+                            style: TextStyle(color: Color.fromRGBO(133, 90, 251, 1), fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "593802559816-vuk8n472k8c6s2madu5s9o2namejtb1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.focusfeed",
+            "certificate_hash": "02c3c295daad07ca24df2d48f728c30f943d688d"
+          }
+        },
+        {
           "client_id": "593802559816-2kon1hhjt5moad1r4cl80i71snc67hna.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "593802559816-2kon1hhjt5moad1r4cl80i71snc67hna.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "593802559816-pr4iedf0u966va8k5rrno2b2531jgt8l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.focusfeed"
+              }
             }
           ]
         }

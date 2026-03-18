@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/welcome_page.dart'; // add this
+import 'pages/feed_page.dart';
 
 void main() {
   runApp(const FocusFeed());
@@ -13,6 +14,7 @@ class FocusFeed extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: WelcomePage(),
+      // home: FeedPage(),
     );
   }
 }

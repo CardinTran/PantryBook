@@ -3,7 +3,7 @@ import 'package:focusfeed/features/screens/feed_item.dart';
 import 'package:focusfeed/features/screens/feed_screen.dart';
 import 'package:focusfeed/features/screens/import_screen.dart';
 import 'package:focusfeed/features/screens/saved_screen.dart';
-import 'package:focusfeed/features/screens/settings_screen.dart';
+import 'package:focusfeed/features/screens/settings/settings_screen.dart';
 import 'package:focusfeed/features/screens/library_screen.dart';
 
 class MainNavScreen extends StatefulWidget {
